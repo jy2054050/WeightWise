@@ -42,7 +42,6 @@ child-growth-tracker/
   },
   "functions": {
     "api/index.js": {
-      "runtime": "nodejs18.x",
       "memory": 1024,
       "maxDuration": 10
     }
