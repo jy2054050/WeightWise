@@ -1,20 +1,8 @@
 {
-  "buildCommand": "npm run build && rm -rf public/* && cp -r dist/public/* public/",
-  "outputDirectory": "public",
-  "functions": {
-    "api/index.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ]
 }
