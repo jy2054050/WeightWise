@@ -35,7 +35,7 @@ child-growth-tracker/
 **Current `vercel.json` (PRODUCTION READY):**
 ```json
 {
-  "buildCommand": "npx vite build --mode production",
+  "buildCommand": "npm install vite @vitejs/plugin-react postcss tailwindcss autoprefixer typescript @tailwindcss/vite && npx vite build --mode production",
   "outputDirectory": "dist/public",
   "env": {
     "NODE_ENV": "production"
@@ -86,7 +86,7 @@ child-growth-tracker/
 **All Supported Properties:**
 | Property | Value | Description |
 |----------|-------|-------------|
-| `buildCommand` | `"npx vite build --mode production"` | Builds React app in production mode |
+| `buildCommand` | `"npm install vite... && npx vite build --mode production"` | Installs build deps and builds React app |
 | `outputDirectory` | `"dist/public"` | Where static files are served from |
 | `rewrites` | Array | Routes API calls to serverless function |
 | `env` | Object | Environment variables (see below) |

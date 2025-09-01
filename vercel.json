@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npx vite build --mode production",
+  "buildCommand": "npm install vite @vitejs/plugin-react postcss tailwindcss autoprefixer typescript @tailwindcss/vite && npx vite build --mode production",
   "outputDirectory": "dist/public",
   "env": {
     "NODE_ENV": "production"
