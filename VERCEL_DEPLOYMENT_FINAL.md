@@ -21,37 +21,24 @@ This Child Growth Tracker has been successfully configured for production deploy
 ### vercel.json (Production Ready)
 ```json
 {
-  "version": 2,
-  "name": "child-growth-tracker",
-  "builds": [
-    {
-      "src": "api/index.js", 
-      "use": "@vercel/node"
-    },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/public"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
+  "buildCommand": "npm run build && rm -rf public/* && cp -r dist/public/* public/",
+  "outputDirectory": "public",
   "functions": {
     "api/index.js": {
       "memory": 1024,
       "maxDuration": 10
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
 ```
 
@@ -61,8 +48,8 @@ This Child Growth Tracker has been successfully configured for production deploy
 | Field | Value |
 |-------|--------|
 | **Framework Preset** | `Other` |
-| **Build Command** | `npm run build` |
-| **Output Directory** | `dist/public` |
+| **Build Command** | `npm run build && rm -rf public/* && cp -r dist/public/* public/` |
+| **Output Directory** | `public` |
 | **Install Command** | `npm install` |
 | **Node.js Version** | `22.x` |
 

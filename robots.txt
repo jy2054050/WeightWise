@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Main sitemap
+Sitemap: https://growthcheck.in/sitemap.xml
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Prevent crawling of API endpoints
+Disallow: /api/
