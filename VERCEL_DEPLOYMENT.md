@@ -34,7 +34,7 @@ child-growth-tracker/
 ```json
 {
   "buildCommand": "vite build",
-  "outputDirectory": "dist/client",
+  "outputDirectory": "dist/public",
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -48,7 +48,7 @@ child-growth-tracker/
 | Property | Value | Description |
 |----------|-------|-------------|
 | `buildCommand` | `"vite build"` | Builds React app |
-| `outputDirectory` | `"dist/client"` | Where static files are served from |
+| `outputDirectory` | `"dist/public"` | Where static files are served from |
 | `rewrites` | Array | Routes API calls to serverless function |
 | `env` | Object | Environment variables (see below) |
 | `functions` | Object | Function-specific configuration |
@@ -173,7 +173,7 @@ curl -X POST https://your-app.vercel.app/api/calculate-growth \
 ## 🎯 DEPLOYMENT VERIFICATION
 
 ### 1. Build Success Checklist:
-- ✅ `vite build` creates `dist/client/` directory
+- ✅ `vite build` creates `dist/public/` directory
 - ✅ `api/index.js` contains serverless function
 - ✅ `api/package.json` has correct dependencies
 - ✅ Environment variables are set
@@ -206,7 +206,7 @@ curl -X POST https://your-domain.vercel.app/api/calculate-growth \
    ```bash
    # Check if vite build works locally
    npm run build
-   ls -la dist/client/
+   ls -la dist/public/
    ```
 
 2. **API Not Working:**
