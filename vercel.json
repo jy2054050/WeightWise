@@ -1,47 +1,26 @@
 {
-  "buildCommand": "npm install vite @vitejs/plugin-react postcss tailwindcss autoprefixer typescript @tailwindcss/vite && npx vite build --mode production",
-  "outputDirectory": "dist/public",
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "functions": {
-    "api/index.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
-  "headers": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "s-maxage=60, stale-while-revalidate"
-        }
-      ]
+      "src": "api/index.js",
+      "use": "@vercel/node"
     },
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
-      ]
+      "src": "dist/public/**",
+      "use": "@vercel/static"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api"
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/public/$1"
     }
-  ]
+  ],
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public"
 }
