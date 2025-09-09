@@ -43,6 +43,7 @@ export default function GiftIdeas() {
         }
         
         const data = await response.json();
+        console.log('API Response imageUrls:', data.products?.map((p: any) => p.imageUrl));
         setProducts(data.products || []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load products');

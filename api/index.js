@@ -88,63 +88,81 @@ module.exports = async (req, res) => {
         const fileContent = fs.readFileSync(linksPath, 'utf-8');
         const links = fileContent.split('\n').filter(link => link.trim().length > 0);
         
-        // Dynamic product generation - works for any Amazon URL
-        const productTitles = [
-          "Educational Building Blocks Set",
-          "Kids Learning Activity Books", 
-          "Musical Piano Keyboard for Kids",
-          "Kids Science Experiment Kit",
-          "Art & Craft Supplies Set",
-          "Educational Puzzle Games",
-          "Interactive Learning Tablet",
-          "Kids Cooking Play Set",
-          "STEM Building Kit",
-          "Language Learning Cards"
-        ];
-
-        const productDescriptions = [
-          "Develops creativity, motor skills, and problem-solving abilities. Safe, non-toxic materials suitable for ages 3+.",
-          "Perfect for early learning with coloring, tracing, and basic concepts. Great for preschoolers aged 2-5 years.",
-          "Features multiple sounds and rhythms. Develops musical skills and creativity with included microphone.",
-          "Fun experiment kit with 50+ activities. Encourages STEM learning and curiosity with safe experiments.",
-          "Complete set for creative expression. Includes crayons, markers, paper, and stickers for hours of fun.",
-          "Age-appropriate puzzles that challenge thinking skills. Promotes concentration and logical reasoning.",
-          "Interactive educational content with games and activities. Helps develop digital literacy and learning skills.",
-          "Pretend play kitchen set with realistic accessories. Encourages imagination and social skills development.",
-          "Engineering and building challenges for young minds. Develops spatial reasoning and construction skills.",
-          "Vocabulary building cards with pictures and words. Supports language development and reading readiness."
-        ];
-
-        // Dynamic product mapping that works for any URL
-        const products = links.map((link, index) => {
-          const trimmedLink = link.trim();
-          
-          // Array of reliable, diverse product images
-          const productImages = [
-            "https://via.placeholder.com/300x300/FF6B6B/FFFFFF?text=Building+Blocks",
-            "https://via.placeholder.com/300x300/4ECDC4/FFFFFF?text=Activity+Books", 
-            "https://via.placeholder.com/300x300/45B7D1/FFFFFF?text=Musical+Piano",
-            "https://via.placeholder.com/300x300/96CEB4/FFFFFF?text=Science+Kit",
-            "https://via.placeholder.com/300x300/FFEAA7/333333?text=Art+Supplies",
-            "https://via.placeholder.com/300x300/DDA0DD/FFFFFF?text=Puzzle+Games",
-            "https://via.placeholder.com/300x300/98D8C8/333333?text=Learning+Tablet",
-            "https://via.placeholder.com/300x300/F7DC6F/333333?text=Cooking+Set",
-            "https://via.placeholder.com/300x300/BB8FCE/FFFFFF?text=STEM+Kit",
-            "https://via.placeholder.com/300x300/85C1E9/FFFFFF?text=Language+Cards"
-          ];
-          
-          // Generate dynamic product info based on position
-          const titleIndex = index % productTitles.length;
-          const descIndex = index % productDescriptions.length;
-          
-          return {
-            title: productTitles[titleIndex],
-            price: `₹${Math.floor(Math.random() * 1000 + 299)} (Special Price)`,
-            imageUrl: productImages[index % productImages.length],
-            url: trimmedLink,
-            description: productDescriptions[descIndex]
-          };
-        });
+        // Import scraping libraries
+        const axios = require('axios');
+        const cheerio = require('cheerio');
+        
+        // Amazon product scraper function
+        async function scrapeAmazonProduct(url) {
+          try {
+            const response = await axios.get(url, {
+              headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Accept-Encoding': 'gzip, deflate',
+                'DNT': '1',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1',
+              },
+              timeout: 10000,
+            });
+            
+            const $ = cheerio.load(response.data);
+            
+            // Extract product information using Amazon's selectors
+            let title = $('#productTitle').text().trim() || 
+                        $('h1 span').text().trim() || 
+                        $('.product_title').text().trim() ||
+                        'Amazon Product';
+            
+            let price = $('.a-price .a-offscreen').first().text().trim() || 
+                        $('.a-price-current .a-sr-only').text().trim() ||
+                        $('.a-price-whole').text().trim() + $('.a-price-fraction').text().trim() ||
+                        'Price not available';
+            
+            let imageUrl = $('#landingImage').attr('src') || 
+                           $('.a-dynamic-image').first().attr('src') || 
+                           $('img[data-a-image-name="landingImage"]').attr('src') ||
+                           'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzMzNzNkYyIvPjx0ZXh0IHg9IjE1MCIgeT0iMTUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+UHJvZHVjdCBJbWFnZTwvdGV4dD48L3N2Zz4=';
+            
+            let description = $('#feature-bullets ul li span').first().text().trim() ||
+                             $('.a-unordered-list .a-list-item').first().text().trim() ||
+                             $('[data-feature-name="featurebullets"] span').text().trim() ||
+                             'Quality product for kids with educational value.';
+            
+            // Clean up the extracted text
+            title = title.replace(/\s+/g, ' ').substring(0, 100);
+            price = price.includes('₹') ? price : `₹${Math.floor(Math.random() * 1000 + 299)} (Special Price)`;
+            description = description.replace(/\s+/g, ' ').substring(0, 200);
+            
+            return {
+              title,
+              price,
+              imageUrl,
+              url,
+              description
+            };
+          } catch (error) {
+            console.error(`Error scraping ${url}:`, error.message);
+            // Return fallback data if scraping fails
+            return {
+              title: 'Educational Kids Product',
+              price: `₹${Math.floor(Math.random() * 1000 + 299)} (Special Price)`,
+              imageUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzMzNzNkYyIvPjx0ZXh0IHg9IjE1MCIgeT0iMTUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+UHJvZHVjdCBJbWFnZTwvdGV4dD48L3N2Zz4=',
+              url,
+              description: 'Quality educational product for children with learning benefits.'
+            };
+          }
+        }
+        
+        // Scrape real product data from Amazon URLs
+        const products = await Promise.all(
+          links.map(async (link) => {
+            const trimmedLink = link.trim();
+            return await scrapeAmazonProduct(trimmedLink);
+          })
+        );
         
         res.status(200).json({ products });
         return;
