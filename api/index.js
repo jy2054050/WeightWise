@@ -101,6 +101,30 @@ module.exports = async (req, res) => {
             price: "₹849 (was ₹999)",
             imageUrl: "https://m.media-amazon.com/images/I/71j1MXXwVgL._SY466_.jpg",
             description: "Logical activity binders, Montessori books for kids. Velcro-based, round edges, laminated sheets. Develops problem-solving abilities and reasoning skills."
+          },
+          '5TqveSw': {
+            title: "Educational Building Blocks Set",
+            price: "₹399 (was ₹599)",
+            imageUrl: "https://m.media-amazon.com/images/I/71F5f7XvMsL._SL1500_.jpg",
+            description: "Colorful building blocks set for kids. Develops creativity, motor skills, and problem-solving abilities. Safe, non-toxic materials suitable for ages 3+."
+          },
+          'cYIGwoq': {
+            title: "Kids Learning Activity Books",
+            price: "₹299 (was ₹450)",
+            imageUrl: "https://m.media-amazon.com/images/I/81QBmGdPyOL._SL1500_.jpg",
+            description: "Set of educational activity books for early learning. Includes coloring, tracing, and basic concepts. Perfect for preschoolers aged 2-5 years."
+          },
+          'f6kPTOU': {
+            title: "Musical Piano Keyboard for Kids",
+            price: "₹1,299 (was ₹1,899)",
+            imageUrl: "https://m.media-amazon.com/images/I/71VQ2h3NRBL._SL1500_.jpg",
+            description: "37-key electronic piano keyboard with multiple sounds and rhythms. Develops musical skills and creativity. Includes microphone and demo songs."
+          },
+          '7MAe7Aa': {
+            title: "Kids Science Experiment Kit",
+            price: "₹899 (was ₹1,299)",
+            imageUrl: "https://m.media-amazon.com/images/I/81fS5Q7KXRL._SL1500_.jpg",
+            description: "Fun science experiment kit with 50+ activities. Encourages STEM learning and curiosity. Safe experiments for kids aged 8+ with adult supervision."
           }
         };
 
@@ -123,21 +147,21 @@ module.exports = async (req, res) => {
           // Enhanced fallback for unknown Amazon products
           if (trimmedLink.includes('amazon.in') || trimmedLink.includes('amzn.in')) {
             return {
-              title: "Amazon Product for Kids",
-              price: "Check Amazon for current price",
-              imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop&crop=center",
+              title: "Educational Toy for Children",
+              price: "View on Amazon for pricing",
+              imageUrl: "https://m.media-amazon.com/images/G/31/img18/toys/homepage/toys-icon._CB1565799318_.png",
               url: trimmedLink,
-              description: "Educational or developmental product available on Amazon. Click to view details and current pricing."
+              description: "Age-appropriate educational toy that promotes learning and development. Click to view full details, ratings, and current pricing on Amazon."
             };
           }
           
           // Generic fallback for non-Amazon links
           return {
-            title: "Educational Product",
-            price: "Price varies",
-            imageUrl: "https://images.unsplash.com/photo-1558877385-8c644adb3d9c?w=300&h=300&fit=crop&crop=center",
+            title: "Educational Product for Kids",
+            price: "View for pricing",
+            imageUrl: "https://m.media-amazon.com/images/G/31/img18/toys/homepage/toys-icon._CB1565799318_.png",
             url: trimmedLink,
-            description: "Educational toy or product recommended for child development and learning."
+            description: "Educational product recommended for child development and learning. Click to view full details and pricing."
           };
         });
         

@@ -66,6 +66,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
           price: "₹849 (was ₹999)",
           imageUrl: "https://m.media-amazon.com/images/I/71j1MXXwVgL._SY466_.jpg",
           description: "Logical activity binders, Montessori books for kids. Velcro-based, round edges, laminated sheets. Develops problem-solving abilities and reasoning skills."
+        },
+        '5TqveSw': {
+          title: "Educational Building Blocks Set",
+          price: "₹399 (was ₹599)",
+          imageUrl: "https://m.media-amazon.com/images/I/71F5f7XvMsL._SL1500_.jpg",
+          description: "Colorful building blocks set for kids. Develops creativity, motor skills, and problem-solving abilities. Safe, non-toxic materials suitable for ages 3+."
+        },
+        'cYIGwoq': {
+          title: "Kids Learning Activity Books",
+          price: "₹299 (was ₹450)",
+          imageUrl: "https://m.media-amazon.com/images/I/81QBmGdPyOL._SL1500_.jpg",
+          description: "Set of educational activity books for early learning. Includes coloring, tracing, and basic concepts. Perfect for preschoolers aged 2-5 years."
+        },
+        'f6kPTOU': {
+          title: "Musical Piano Keyboard for Kids",
+          price: "₹1,299 (was ₹1,899)",
+          imageUrl: "https://m.media-amazon.com/images/I/71VQ2h3NRBL._SL1500_.jpg",
+          description: "37-key electronic piano keyboard with multiple sounds and rhythms. Develops musical skills and creativity. Includes microphone and demo songs."
+        },
+        '7MAe7Aa': {
+          title: "Kids Science Experiment Kit",
+          price: "₹899 (was ₹1,299)",
+          imageUrl: "https://m.media-amazon.com/images/I/81fS5Q7KXRL._SL1500_.jpg",
+          description: "Fun science experiment kit with 50+ activities. Encourages STEM learning and curiosity. Safe experiments for kids aged 8+ with adult supervision."
         }
       };
 
