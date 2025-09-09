@@ -117,8 +117,12 @@ export default function GiftIdeas() {
                     alt={product.title}
                     className="w-full h-full object-cover"
                     onError={(e) => {
+                      console.error('Image failed to load:', product.imageUrl);
                       const target = e.target as HTMLImageElement;
-                      target.src = 'https://via.placeholder.com/300x300?text=Product+Image';
+                      target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzY2NmRkZCIvPjx0ZXh0IHg9IjE1MCIgeT0iMTUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+UHJvZHVjdCBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                    }}
+                    onLoad={() => {
+                      console.log('Image loaded successfully:', product.title);
                     }}
                   />
                 </div>
