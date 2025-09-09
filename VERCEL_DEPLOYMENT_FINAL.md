@@ -21,7 +21,8 @@ This Child Growth Tracker has been successfully configured for production deploy
 ### vercel.json (Production Ready)
 ```json
 {
-  "buildCommand": "npm run build && rm -rf public/* && cp -r dist/public/* public/",
+  "installCommand": "npm install --production=false",
+  "buildCommand": "npx vite build && rm -rf public/* && cp -r dist/public/* public/",
   "outputDirectory": "public",
   "functions": {
     "api/index.js": {
@@ -48,9 +49,9 @@ This Child Growth Tracker has been successfully configured for production deploy
 | Field | Value |
 |-------|--------|
 | **Framework Preset** | `Other` |
-| **Build Command** | `npm run build && rm -rf public/* && cp -r dist/public/* public/` |
+| **Build Command** | `npx vite build && rm -rf public/* && cp -r dist/public/* public/` |
 | **Output Directory** | `public` |
-| **Install Command** | `npm install` |
+| **Install Command** | `npm install --production=false` |
 | **Node.js Version** | `22.x` |
 
 ### Environment Variables

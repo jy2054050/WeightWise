@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, Syringe, Ruler, Star, Heart, ArrowRight, Plane, FileText } from "lucide-react";
+import { TrendingUp, Syringe, Ruler, Star, Heart, ArrowRight, Plane, FileText, Gift } from "lucide-react";
 import { trackEvent } from "../../lib/analytics";
 
 // SVG Doodles (reusing from growth tracker)
@@ -255,6 +255,33 @@ export default function Dashboard() {
                     className="w-full h-10 text-sm font-medium border-kid-orange/30 text-kid-orange hover:bg-kid-orange/10 rounded-xl"
                   >
                     View Checklist
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Gift Ideas */}
+            <Card className="bg-gradient-to-br from-kid-pink/5 to-purple-50/30 border-kid-pink/15 hover:border-kid-pink/30 transition-all duration-300 hover:shadow-md">
+              <CardHeader className="text-center pb-3">
+                <div className="w-12 h-12 mx-auto bg-gradient-to-r from-kid-pink/80 to-kid-purple/80 rounded-full flex items-center justify-center mb-3">
+                  <Gift className="w-6 h-6 text-white" />
+                </div>
+                <CardTitle className="text-lg font-semibold text-text-primary">
+                  Gift Ideas
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-text-secondary mb-4 text-sm leading-relaxed">
+                  Curated educational and developmental gift recommendations for children
+                </p>
+                <Link href="/gift-ideas">
+                  <Button 
+                    onClick={() => handleFeatureClick('gift-ideas')}
+                    variant="outline"
+                    className="w-full h-10 text-sm font-medium border-kid-pink/30 text-kid-pink hover:bg-kid-pink/10 rounded-xl"
+                  >
+                    Browse Gifts
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>

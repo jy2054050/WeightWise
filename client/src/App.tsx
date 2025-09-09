@@ -16,6 +16,7 @@ import WHODataReference from "@/pages/who-data-reference";
 import VaccinationGuide from "@/pages/vaccination-guide";
 import TravelMedicineGuide from "@/pages/travel-medicine-guide";
 import IndianDocumentsGuide from "@/pages/indian-documents-guide";
+import GiftIdeas from "@/pages/gift-ideas";
 
 function Router() {
   // Track page views when routes change
@@ -31,6 +32,7 @@ function Router() {
         <Route path="/vaccination" component={VaccinationGuide} />
         <Route path="/travel-medicine" component={TravelMedicineGuide} />
         <Route path="/indian-documents" component={IndianDocumentsGuide} />
+        <Route path="/gift-ideas" component={GiftIdeas} />
         <Route path="/legacy" component={Home} />
         <Route path="/guide" component={TheoryGuide} />
         <Route path="/who-data" component={WHODataReference} />

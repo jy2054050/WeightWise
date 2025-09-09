@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Syringe, Ruler, Menu, X, Home, BookOpen, FileText } from "lucide-react";
+import { TrendingUp, Syringe, Ruler, Menu, X, Home, BookOpen, FileText, Gift } from "lucide-react";
 import { trackEvent } from "../../lib/analytics";
 
 const Navigation = () => {
@@ -33,6 +33,7 @@ const Navigation = () => {
   const secondaryItems = [
     { path: "/vaccination", label: "Vaccination", icon: Syringe },
     { path: "/guide", label: "Guide", icon: BookOpen },
+    { path: "/gift-ideas", label: "Gift Ideas", icon: Gift },
     { path: "/who-data", label: "WHO Data", icon: FileText }
   ];
 

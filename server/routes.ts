@@ -42,6 +42,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Gift Ideas endpoint - fetch products from links file
+  app.get("/api/gift-ideas", async (req, res) => {
+    try {
+      const fs = await import('fs/promises');
+      const path = await import('path');
+      
+      // Read the gift links file
+      const linksPath = path.join(process.cwd(), 'gift-ideas-links.txt');
+      const fileContent = await fs.readFile(linksPath, 'utf-8');
+      const links = fileContent.split('\n').filter(link => link.trim().length > 0);
+      
+      // Product database - easily extensible for new products
+      const productDatabase: { [key: string]: { title: string; price: string; imageUrl: string; description: string } } = {
+        '79deBdP': {
+          title: "Aditi Toys Gatling Bubble Gun for Kids",
+          price: "₹288 (was ₹499)",
+          imageUrl: "https://m.media-amazon.com/images/I/71nzHoo5C2L._SY355_.jpg",
+          description: "8-hole bubble gun toy for kids above 3 years. Includes bubble solution, BIS approved, 100% safe & skin friendly. Perfect for indoor & outdoor play."
+        },
+        '3VnKHRB': {
+          title: "Activity Binders for Kids Aged 1-4 Years",
+          price: "₹849 (was ₹999)",
+          imageUrl: "https://m.media-amazon.com/images/I/71j1MXXwVgL._SY466_.jpg",
+          description: "Logical activity binders, Montessori books for kids. Velcro-based, round edges, laminated sheets. Develops problem-solving abilities and reasoning skills."
+        }
+      };
+
+      // Enhanced product mapping with automatic Amazon ID extraction
+      const products = links.map((link, index) => {
+        const trimmedLink = link.trim();
+        
+        // Extract Amazon product ID from various URL formats
+        const amazonIdMatch = trimmedLink.match(/\/d\/([A-Za-z0-9]+)/);
+        const productId = amazonIdMatch ? amazonIdMatch[1] : null;
+        
+        // Check if we have specific product data
+        if (productId && productDatabase[productId]) {
+          return {
+            ...productDatabase[productId],
+            url: trimmedLink
+          };
+        }
+        
+        // Enhanced fallback for unknown Amazon products
+        if (trimmedLink.includes('amazon.in') || trimmedLink.includes('amzn.in')) {
+          return {
+            title: "Amazon Product for Kids",
+            price: "Check Amazon for current price",
+            imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop&crop=center",
+            url: trimmedLink,
+            description: "Educational or developmental product available on Amazon. Click to view details and current pricing."
+          };
+        }
+        
+        // Generic fallback for non-Amazon links
+        return {
+          title: "Educational Product",
+          price: "Price varies",
+          imageUrl: "https://images.unsplash.com/photo-1558877385-8c644adb3d9c?w=300&h=300&fit=crop&crop=center",
+          url: trimmedLink,
+          description: "Educational toy or product recommended for child development and learning."
+        };
+      });
+      
+      res.json({ products });
+    } catch (error) {
+      console.error('Error reading gift ideas:', error);
+      res.status(500).json({ error: "Failed to load gift ideas" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
