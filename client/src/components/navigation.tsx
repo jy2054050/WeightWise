@@ -32,8 +32,8 @@ const Navigation = () => {
 
   const secondaryItems = [
     { path: "/vaccination", label: "Vaccination", icon: Syringe },
-    { path: "/guide", label: "Guide", icon: BookOpen },
     { path: "/gift-ideas", label: "Gift Ideas", icon: Gift },
+    { path: "/guide", label: "Guide", icon: BookOpen },
     { path: "/who-data", label: "WHO Data", icon: FileText }
   ];
 
@@ -96,7 +96,7 @@ const Navigation = () => {
             })}
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 overflow-visible">
             {secondaryItems.map((item) => {
               const IconComponent = item.icon;
               return (
@@ -105,7 +105,7 @@ const Navigation = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleNavClick(item.path, item.label)}
-                    className={`text-text-secondary hover:text-text-primary ${
+                    className={`text-text-secondary hover:text-text-primary whitespace-nowrap ${
                       isActive(item.path) ? "text-kid-purple" : ""
                     }`}
                   >
